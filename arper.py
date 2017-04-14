@@ -21,8 +21,8 @@ def restore_target(gateway_ip, gateway_mac, target_ip, target_mac):
     send(ARP(op=2, psrc=target_ip, pdst=gateway_ip, hwdst='ff:ff:ff:ff:ff:ff',
         hwsrc=target_mac), count=5)
 
-# signals the main thread to exit
-os.kill(os.getpid(), signal.SIGINT)
+    # signals the main thread to exit
+    os.kill(os.getpid(), signal.SIGINT)
 
 
 def get_mac(ip_address):
